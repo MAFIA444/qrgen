@@ -1,19 +1,17 @@
-import streamlit as s
+import streamlit as st
 import qrcode
 
-s.title("QRCode Generator")
-orcode = s.text_input("Enter the URL")  
+st.title("QR Code Generator")
 
+url = st.text_input("Enter the URL")
+app_name = st.text_input("Enter File Name:")
 
-app_name = s.text_input("Enter File Name : ")
+if st.button("Generate QR Code"):
+    if url and app_name:
+        qr = qrcode.make(url)
+        qr.save(f"{app_name}.png")
 
-if s.button('success'):
-    makeqr = qrcode.make(orcode)
-    makeqr.save(f"{app_name}.png")
-
-    s.success("QR code genereted SUCESSFULLY")
-    s.image(f"{app_name}.png")
-
-
-
-    
+        st.success("✅ QR Code generated successfully!")
+        st.image(f"{app_name}.png")
+    else:
+        st.error("⚠️ Please enter both a URL and a file name.")
